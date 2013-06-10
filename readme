@@ -1,0 +1,45 @@
+###############
+First assignment s1248493
+###############
+
+
+In this assignment,I finish some works:
+
+1.Read the bone data(skeleton.out),construct the bone of the character.
+2.Build bone-transformation method to control the movement of character.
+3.load weight-data and finish the linear blending.  
+4.Using timer for moving the character automatically.
+
+
+###################
+Bone transformation
+###################
+
+In gerneral,the bone transformation is not so hard.There are the major steps of the bone transformation:
+
+1.Save the basic matrix of each bone into a vector and specify the degree.(initialize)
+2.the translate matrix will translate the global position of bone to the local coordinate
+3.In the local coordinate,we can rotate the bone by the degree we specified.
+4.After we rotate,we translate back to the global coordinate(new global position).Also,we store the transformation matrix for linear blending.
+
+
+For example, If we want to rotate the bone 16 by 30 degree,we need to find the bone 15,which connected to the bone 16.For this reason,we store the connect bone into a vector,then we can quickly look up.Follow the steps above, we translate the bone 15 to local coordinate,rotate 30 degree and translate back to global coordinate to get the new position of bone 16(VN16 = M* V16,VN is new position,M stands for the transformation matrix and V 16 is original bone 16 position.)
+
+######################
+Linear blending 
+######################
+
+For doing linear blending,we should record the transformation matrix of each bone.Once the bone rotate or translate,we then record the new transformation matrix.The container of these transformation matrix has been setted in the Bone class.Every time we draw the triangle,we get three vertices,each vertex should calculate the effect of transformation matrix from bone and their weight.Thus,we use for loop in each vertex.Sum these effect to get the new vertex(VN = sum(W*M*V),VN is new vertex,W is the wieght of the vertex at each bone,M is transformation matrix,V stands for the original vertex).
+ 
+#####################
+Timerfunction
+#####################
+For animating the character automatically,I use the glutTimerFunc to finish it.In timer function,the scene will be draw again and again every 30 millisecond.Then I also add the degree every time the timer function executed.Once the degree more than 360,it would return to 0 and start.
+
+
+
+
+
+
+   
+
